@@ -113,6 +113,7 @@ function gitPull(vimppmRepositoryName) {
 function installFromVimpr(pluginName) {
     var pluginDirPath = vimppmDirPath + '/' + pluginName;
     if (!isDirectory(pluginDirPath)) {
+        pluginName += '.js'
         if (liberator.has('Windows')) {
             var downloadUrl = 'https://raw.github.com/vimpr/vimperator-plugins/master/' + pluginName;
             var destPath = io.File.expandPath(pluginDirPath + '/plugin/' + pluginName)
@@ -124,7 +125,7 @@ function installFromVimpr(pluginName) {
         }
         return true;
     } else {
-        liberator.echoerr(pluginName + ' is already exists!');
+        liberator.echoerr(pluginName + ' already exists!');
         return false;
     }
 }
@@ -132,6 +133,7 @@ function installFromVimpr(pluginName) {
 function updateFromVimpr(pluginName) {
     var pluginDirPath = vimppmDirPath + '/' + pluginName;
     if (isDirectory(pluginDirPath)) {
+        pluginName += '.js'
         if (liberator.has('Windows')) {
             var downloadUrl = 'https://raw.github.com/vimpr/vimperator-plugins/master/' + pluginName;
             var destPath = io.File.expandPath(pluginDirPath + '/plugin/' + pluginName)
@@ -161,7 +163,7 @@ function updateFromVimpr(pluginName) {
 
             if (isDirectory(pluginDirPath)) {
                 liberator.execute('set rtp+=' + pluginDirPath);
-                liberator.echo('Add ' + pluginDirPath + ' to runtimepath.');
+                //liberator.echo('Add ' + pluginDirPath + ' to runtimepath.');
             }
 
             vimppmRepository.push(args[0]);
