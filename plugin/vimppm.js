@@ -90,7 +90,7 @@ function installFromGithub(vimppmRepositoryName) {
         }
         return true;
     } else {
-        liberator.echoerr(vimppmRepositoryName + ' is already exists!');
+        liberator.echoerr(vimppmRepositoryName + ' already exists!');
         return false;
     }
 }
@@ -113,7 +113,7 @@ function gitPull(vimppmRepositoryName) {
 function installFromVimpr(pluginName) {
     var pluginDirPath = vimppmDirPath + '/' + pluginName;
     if (!isDirectory(pluginDirPath)) {
-        pluginName += '.js'
+        pluginName += '.js';
         if (liberator.has('Windows')) {
             var downloadUrl = 'https://raw.github.com/vimpr/vimperator-plugins/master/' + pluginName;
             var destPath = io.File.expandPath(pluginDirPath + '/plugin/' + pluginName)
@@ -133,7 +133,7 @@ function installFromVimpr(pluginName) {
 function updateFromVimpr(pluginName) {
     var pluginDirPath = vimppmDirPath + '/' + pluginName;
     if (isDirectory(pluginDirPath)) {
-        pluginName += '.js'
+        pluginName += '.js';
         if (liberator.has('Windows')) {
             var downloadUrl = 'https://raw.github.com/vimpr/vimperator-plugins/master/' + pluginName;
             var destPath = io.File.expandPath(pluginDirPath + '/plugin/' + pluginName)
@@ -148,6 +148,14 @@ function updateFromVimpr(pluginName) {
     }
 }
 
+function hasDuplicateRepository(vimppmRepository, repositoryName) {
+    for(var i =0; i < vimppmRepository.length; i++){
+        if(repositoryName == vimppmRepository[i]){
+            return true;
+        }
+    }
+    return false;
+}
 
 (function () {
     var vimppmRepository = [];
@@ -166,7 +174,9 @@ function updateFromVimpr(pluginName) {
                 //liberator.echo('Add ' + pluginDirPath + ' to runtimepath.');
             }
 
-            vimppmRepository.push(args[0]);
+            if (!hasDuplicateRepository(vimppmRepository, args[0])) 
+                vimppmRepository.push(args[0]);
+
         }, {
             subCommands: [
                 new Command(
